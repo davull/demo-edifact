@@ -5,13 +5,13 @@ using FluentAssertions;
 
 namespace Edifact.App.Test.Edifact;
 
-public class GenericParserTests
+public class ParserTests
 {
     [Test]
     public void ShouldParseUNA()
     {
         var line = "UNA:+.? '";
-        var una = GenericParser.ParseUNA(line);
+        var una = Parser.ParseUNA(line);
 
         una.ComponentDataElementSeparator.Should().Be(':');
         una.DataElementSeparator.Should().Be('+');
@@ -25,7 +25,7 @@ public class GenericParserTests
     {
         var raw = "ORDERS:D:97A:UN";
 
-        var s009 = GenericParser.ParseComponentDataElement<S009>(raw, UNA.Default);
+        var s009 = Parser.ParseComponentDataElement<S009>(raw, UNA.Default);
 
         s009.MessageType.Should().Be("ORDERS");
         s009.MessageVersionNumber.Should().Be("D");
@@ -38,7 +38,7 @@ public class GenericParserTests
     {
         var raw = "220::9";
 
-        var c002 = GenericParser.ParseComponentDataElement<C002>(raw, UNA.Default);
+        var c002 = Parser.ParseComponentDataElement<C002>(raw, UNA.Default);
 
         c002.DocumentMessageNameCodedString.Should().Be("220");
         c002.DocumentMessageNameCoded.Should().Be(DocumentMessageName.Order);
@@ -51,7 +51,7 @@ public class GenericParserTests
     {
         var raw = "UNH+1+ORDERS:D:97A:UN";
 
-        var unh = GenericParser.ParseSegment<UNH>(raw, UNA.Default);
+        var unh = Parser.ParseSegment<UNH>(raw, UNA.Default);
 
         unh.MessageReferenceNumber.Should().Be("1");
         unh.MessageIdentifier.MessageType.Should().Be("ORDERS");

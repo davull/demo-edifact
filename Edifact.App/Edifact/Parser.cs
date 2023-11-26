@@ -4,7 +4,7 @@ using Edifact.App.Edifact.Segments;
 
 namespace Edifact.App.Edifact;
 
-public static class GenericParser
+public static class Parser
 {
     public static UNA ParseUNA(string line)
     {
