@@ -56,4 +56,21 @@ public class ParserTests
         unh.MessageReferenceNumber.Should().Be("1");
         unh.MessageIdentifier.MessageType.Should().Be("ORDERS");
     }
+
+    [TestCaseSource(nameof(GetTestFiles))]
+    public void ShouldParseTestFiles(string filePath)
+    {
+        var lines = File.ReadAllLines(filePath);
+
+        // todo ..
+    }
+
+    private static IEnumerable<TestCaseData> GetTestFiles()
+    {
+        var files = Directory.GetFiles("../../../Edifact/TestFiles", "*.txt");
+
+        foreach (var file in files)
+            yield return new TestCaseData(file)
+                { TestName = Path.GetFileNameWithoutExtension(file) };
+    }
 }
